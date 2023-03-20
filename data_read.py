@@ -105,7 +105,7 @@ hc_data_validation_final = np.swapaxes(hc_data_validation_final,0,2)
 lc_data_validation_final = np.swapaxes(lc_data_validation_final,0,2)
 
 
-############ Normalizing the intensities #########################
+############ Normalizing the intensities ########################
 hc_data_final = hc_data_final/10000
 lc_data_final = lc_data_final/10000
 hc_data_test_final = hc_data_test_final/10000
