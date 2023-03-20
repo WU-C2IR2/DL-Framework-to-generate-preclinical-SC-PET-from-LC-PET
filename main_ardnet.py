@@ -1,6 +1,6 @@
 #############  ATTENTION RESIDUAL DILATED NETWORK (ARD-NET) MAIN FILE ###############
 
-from ardnet import denoisenet
+from ard-net import denoisenet
 import math
 from new_data_single import load_train_data, load_test_data, load_validation_data
 from sklearn.model_selection import train_test_split
