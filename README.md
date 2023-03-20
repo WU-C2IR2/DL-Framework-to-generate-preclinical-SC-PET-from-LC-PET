@@ -4,7 +4,7 @@ This repository provides the code for a deep-learning based framework for genera
 ## Steps to Train the DL framework for SC-PET generation
 1. Git Clone the repository
 2. Install `python 3.7.10` and necessary packages by running `conda create --name <env> --file requirements.txt` or by running the `tf_37.yml` file. 
-3. Download the dataset folder `Data_Preclinical` using the link into the same folder where you have cloned the other codes from the repository. The dataset has two subfolders namely: `Training` and `Testing`. The `Training` folder consists of the training samples both in the raw data format and in the .mat format for the different photon count levels. Similarly `Testing` consists of the independent testing dataset for the evaluation of the framework.
+3. Download the dataset folder `Data_Preclinical` from the CCDB website into the same folder where you have cloned the other codes from the repository. The dataset has two subfolders namely: `Training` and `Testing`. The `Training` folder consists of the training samples both in the raw data format and in the .mat format for the different photon count levels. Similarly `Testing` consists of the independent testing dataset for the evaluation of the framework.
 4. Training the network:<br>
   a) Choose the filepath for the training data. <br>
   b) Choose the hyperparameters. <br>
