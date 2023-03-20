@@ -3,7 +3,7 @@ This repository provides the code for a deep-learning based framework for genera
 
 ## Steps to Train the DL framework for SC-PET generation
 1. Git Clone the repository
-2. Install `python 3.9.10` and necessary packages by running `pip install -r requirements.txt`
+2. Install `python 3.7.10` and necessary packages by running `conda create --name <env> --file requirements.txt` or by running the `tf_37.yml` file
 3. 
 
 
