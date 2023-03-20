@@ -5,17 +5,13 @@ Created on Tue Nov  9 18:29:34 2021
 @author: kaushik.dutta
 """
 
+############# THIS SCRIPT IS FOR CALLING THE DILATED-NET ###############
 
-#from residual_unet import denoisenet
+
 import math
 from natsort import natsorted
-#from red_cnn import denoisenet
 from dilated_unet import denoisenet
-#from read_data import load_train_data, load_test_data
-#from data import load_train_data, load_test_data, load_validation_data
-from data_single import load_train_data, load_test_data, load_validation_data, name_selection
-#from new_data_single import load_train_data, load_test_data, load_validation_data, name_selection
-#from suv_analysis import suv_max_mean
+from data_read import load_train_data, load_test_data, load_validation_data, name_selection
 from sklearn.model_selection import train_test_split
 import numpy as np
 from matplotlib import pyplot as plt
@@ -28,8 +24,8 @@ from skimage.metrics import normalized_root_mse as nrmse
 from sklearn.model_selection import GridSearchCV
 import argparse
 import matplotlib
-#from keras.wrappers.scikit_learn import KerasClassifier
 
+########### Accessing two GPUS #################
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
@@ -45,6 +41,7 @@ args = parser.parse_args()
 name = 'dnet_weights_'+ '_Loss_'+ str(args.loss) + '_BatchSize_' + str(args.batch_size) + 'filter_size' + str(args.filters) + '_epoch_' + 'time_lc = ' + str(args.time)
 output_name = 'output/'+'dnet_weights_'+ '_Loss_'+ str(args.loss) + '_BatchSize_' + str(args.batch_size) + '_epoch_'
 
+############# Adaptive Learning Rate Function ##################
 def step_decay(epoch):
    initial_lrate = 1e-4
    drop = 0.5
@@ -53,7 +50,6 @@ def step_decay(epoch):
            math.floor((1+epoch)/epochs_drop))
    return lrate
 
-#ssim = []
 def train():
     print('=============Loading of Training Data and Preprocessing==============')
     hc_train, lc_train = load_train_data()
@@ -78,32 +74,9 @@ def train():
     logger = CSVLogger(os.path.join(log_directory,'log.csv'), separator = ',', append = False)
     early_stopping = EarlyStopping(monitor='loss', patience=15)
     learning_rate = LearningRateScheduler(step_decay)
-    #lc_train_final, lc_val, hc_train_final, hc_val =  train_test_split(lc_train, hc_train, test_size = 0.10)
     history = model.fit(lc_train, hc_train, batch_size = args.batch_size, epochs = args.epoch, callbacks = [model_checkpoint, logger, learning_rate], validation_data = (lc_validation, hc_validation), validation_batch_size = 1)
     scores = model.evaluate(lc_validation, hc_validation)
     ssim = scores[2]
-    
-#    matplotlib.rcParams["figure.dpi"] = 1500
-#    plt.plot(history.history['loss'])
-#    plt.plot(history.history['val_loss'])
-#    #plt.title('D-Net Loss Curve', fontsize = 24)
-#    plt.xticks(fontsize=18)
-#    plt.yticks(fontsize=18)
-#    plt.ylabel('Loss', fontweight='bold',fontsize = 20)
-#    plt.xlabel('Epoch', fontweight='bold',fontsize = 20)
-#    plt.legend(['Train', 'Validation'], loc='lower right',fontsize=16)
-#    plt.savefig(name+'_loss.png')
-#    
-#    plt.plot(history.history['SSIM'])
-#    plt.plot(history.history['val_SSIM'])
-#    #plt.title('D-Net SSIM Curve', fontsize = 24)
-#    plt.xticks(fontsize=18)
-#    plt.yticks(fontsize=18)
-#    plt.ylabel('Loss', fontweight='bold',fontsize = 20)
-#    plt.xlabel('Epoch', fontweight='bold',fontsize = 20)
-#    plt.legend(['Train', 'Validation'], loc='lower right',fontsize=16)
-#    plt.savefig(name+'_SSIM.png')
-    
     print('===============Training Done==========================')
     file = open("performance_dnet1.txt", "a")
     file.write("Batch_Size = " + str(args.batch_size) +  "  Loss Function = " + str(args.loss) +  "  Initial Filter Size = " + str(args.filters) + " Time_lc = " + str(args.time) + "  SSIM = " + str(ssim) + "\n")
@@ -133,7 +106,6 @@ if __name__ == '__main__':
         new_gt = np.mean(gt, axis = 3)
         new_pred = np.mean(pred, axis = 3)
         new_gt_lc = np.mean(gt_lc, axis = 3)
-        #new_pred[new_pred<1000] = 0
         np.save('output/' + output_name + '/'+'gt.npy',gt)
         np.save('output/' + output_name + '/'+'gt_lc.npy',gt_lc)
         np.save('output/' + output_name + '/'+'pred.npy',pred)
