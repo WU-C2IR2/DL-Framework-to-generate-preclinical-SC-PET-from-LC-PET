@@ -9,6 +9,9 @@ This repository provides the code for a deep-learning based framework for genera
   a) Choose the filepath for the training data. <br>
   b) Choose the hyperparameters. <br>
   c) Run the main file of the network which you intend to execute by using the command `python main_ardnet.py --args train` would run the training for ARD-Net using the training dataset for the desired number of epochs. <br>
+5. Testing the network:<br>
+  a) Choose the filepath for the testing data. <br>
+  b) Run the main file of the network which you intend to execute by using the command `python main_ardnet.py --args test` would run the testing for ARD-Net using the testing dataset.<br>
   
 
 
