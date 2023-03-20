@@ -1,5 +1,5 @@
 # Deep Learning Framework for generating preclinical SC-PET images from LC-PET realizations
-This repository provides the code for a deep-learning based framework for generation and multi-objective evaluation of preclinical Standard-Count PET (SC-PET) images from different realizations of Low-Count PET (LC-PET) images. To that end in this project we have developed and optimized a novel deep-learning architecture called Attention based Residual Dilated Network (ARD-Net). The performance of ARD-Net generated SC-PET images were benchmarked against other deep-learning methods i.e. Residual UNet (RU-Net) and Dilated Net (D-Net) and non deep-learning denoisers like Non-Local Means (NLM) and Block Matching and 3D Filtering (BM3D).
+This repository provides the code for a deep-learning based framework for generation and multi-objective evaluation of preclinical Standard-Count PET (SC-PET) images from different realizations of Low-Count PET (LC-PET) images. To that end in this project we have developed and optimized a novel deep-learning architecture called Attention based Residual Dilated Network (ARD-Net). The performance of ARD-Net generated SC-PET images were benchmarked against other deep-learning methods i.e. Residual UNet (RU-Net) <sup>1</sup> and Dilated Net (D-Net) <sup>2</sup> and non deep-learning denoisers like Non-Local Means (NLM) <sup>3</sup> and Block Matching and 3D Filtering (BM3D) <sup>4</sup>.
 
 ## Steps to Train the DL framework for SC-PET generation
 1. Git Clone the repository
@@ -19,6 +19,13 @@ This repository provides the code for a deep-learning based framework for genera
 | ARD-Net | ard-net.py | main_ardnet.py |
 | D-Net | dilated_unet.py | main_dnet.py |
 | RU-Net | residual_unet.py | main_runet.py |
+
+
+### References
+1. He, K.;  Zhang, X.;  Ren, S.; Sun, J., Deep residual learning for image recognition. Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition 2016, 2016-Decem, 770-778.
+2. Yu, F., Koltun, V., & Funkhouser, T. (2017). Dilated residual networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 472-480).
+3. Buades, A., Coll, B., & Morel, J. M. (2011). Non-local means denoising. Image Processing On Line, 1, 208-212.
+4. Lebrun, M. (2012). An analysis and implementation of the BM3D image denoising method. Image Processing On Line, 2012, 175-213.
 
 
   
