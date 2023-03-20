@@ -16,9 +16,9 @@ This repository provides the code for a deep-learning based framework for genera
 ### Different Network Model and their architecture files:
 | Network Model | Architecture File | Main File |
 | --- | --- | --- |
-| ARD-Net | model_ardnet.py | main_ardnet.py |
-| D-Net | model_dnet.py | main_dnet.py |
-| RU-Net | model_runet.py | main_runet.py |
+| ARD-Net | ard-net.py | main_ardnet.py |
+| D-Net | dilated_unet.py | main_dnet.py |
+| RU-Net | residual_unet.py | main_runet.py |
 
 
   
