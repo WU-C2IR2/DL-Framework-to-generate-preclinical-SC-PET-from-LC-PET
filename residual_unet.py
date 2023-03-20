@@ -17,18 +17,16 @@ from tensorflow.keras import backend as K
 
 K.set_image_data_format('channels_last')
 smooth = 1
-#initializer = TruncatedNormal(mean=0.0, stddev=0.02)
 initializer = 'glorot_normal'
 
 def SSIMLoss(y_true, y_pred):
   return 1 - tf.reduce_mean(tf.image.ssim(y_true, y_pred, 1.0))
 
 def M_SSIMLoss(y_true, y_pred):
-    #y_true = np.expand_dims(y_true,2)
     return 1 - (tf.image.ssim_multiscale(y_true, y_pred, 1.0))
 
 def mix_loss(y_true, y_pred):
-    alpha = 0.95
+    alpha = 0.90
     beta = 0.10
     ssim_loss = 1 - tf.reduce_mean(tf.image.ssim(y_true, y_pred, 1))
     l1_loss = K.mean(K.abs(y_true - y_pred))
