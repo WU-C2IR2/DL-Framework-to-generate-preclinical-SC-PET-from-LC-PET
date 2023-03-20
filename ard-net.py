@@ -1,3 +1,5 @@
+########### ARCHITECTURE OF THJE ARD-NET ####################
+
 import tensorflow as tf
 import io
 from tensorflow.keras.models import Model
@@ -9,16 +11,12 @@ from tensorflow.keras.initializers import TruncatedNormal
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras import backend as K
 
-
 def SSIM(y_true, y_pred):
     return tf.reduce_mean(tf.image.ssim(y_true, y_pred, 1.0))
     
 def SSIMLoss(y_true, y_pred):
   return 1 - tf.reduce_mean(tf.image.ssim(y_true, y_pred, 1.0))
 
-#def learning_rate(epochs)
-
-#eam_filter_size = 64
 def eamblock(input, filter_size):
     eam_filter_size = filter_size
     print("EAM Filter Size", eam_filter_size)
