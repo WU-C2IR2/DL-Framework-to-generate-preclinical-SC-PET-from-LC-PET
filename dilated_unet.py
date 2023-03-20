@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jul 19 12:26:19 2021
+Created on Mon Jul 19 12:26:19 2022
 
 @author: kaushik.dutta
 """
@@ -18,7 +18,6 @@ from tensorflow.keras import backend as K
 
 K.set_image_data_format('channels_last')
 smooth = 1
-#initializer = TruncatedNormal(mean=0.0, stddev=0.02)
 initializer = 'glorot_normal'
 
 def SSIM(y_true, y_pred):
@@ -39,7 +38,6 @@ def mix_loss(y_true, y_pred):
     l2_loss = K.mean(tf.keras.losses.mean_squared_error(y_true, y_pred))
     total_loss = alpha*ssim_loss + beta*l1_loss
     return total_loss
-
 
 def denoisenet(filter_size, pretrained_weights = None):
     input_size = (256,256,1);
