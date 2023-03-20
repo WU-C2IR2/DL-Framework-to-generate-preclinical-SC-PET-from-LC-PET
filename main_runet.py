@@ -5,16 +5,12 @@ Created on Tue Nov  9 18:29:34 2021
 @author: kaushik.dutta
 """
 
+#############PYTHON SCRIPT TO IMPLEMENT RESIDUAL U-NET ############
 
 from residual_unet import denoisenet
 import math
 from natsort import natsorted
-#from red_cnn import denoisenet
-#from dilated_unet import denoisenet
-#from read_data import load_train_data, load_test_data
-#from data import load_train_data, load_test_data, load_validation_data
-#from data_single import load_train_data, load_test_data, load_validation_data, name_selection
-from new_data_single import load_train_data, load_test_data, load_validation_data, name_selection
+from data_read import load_train_data, load_test_data, load_validation_data, name_selection
 #from suv_analysis import suv_max_mean
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -53,7 +49,6 @@ def step_decay(epoch):
            math.floor((1+epoch)/epochs_drop))
    return lrate
 
-#ssim = []
 def train():
     print('=============Loading of Training Data and Preprocessing==============')
     hc_train, lc_train = load_train_data()
@@ -82,36 +77,7 @@ def train():
     history = model.fit(lc_train, hc_train, batch_size = args.batch_size, epochs = args.epoch, callbacks = [model_checkpoint, logger, learning_rate], validation_data = (lc_validation, hc_validation), validation_batch_size = 1)
     scores = model.evaluate(lc_validation, hc_validation)
     ssim = scores[2]
-    
-    matplotlib.rcParams["figure.dpi"] = 1500
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    #plt.title('D-Net Loss Curve', fontsize = 24)
-    plt.xticks(fontsize=18)
-    plt.yticks(fontsize=18)
-    plt.ylabel('Loss', fontweight='bold',fontsize = 16)
-    plt.xlabel('Epoch', fontweight='bold',fontsize = 16)
-    plt.legend(['Train', 'Validation'], loc='upper right',fontsize=12)
-    plt.savefig(name+'_loss.png')
-    
-    plt.plot(history.history['SSIM'])
-    plt.plot(history.history['val_SSIM'])
-    #plt.title('D-Net SSIM Curve', fontsize = 24)
-    plt.xticks(fontsize=18)
-    plt.yticks(fontsize=18)
-    plt.ylabel('Loss', fontweight='bold',fontsize = 16)
-    plt.xlabel('Epoch', fontweight='bold',fontsize = 16)
-    plt.legend(['Train', 'Validation'], loc='lower right',fontsize=12)
-    plt.savefig(name+'_SSIM.png')
-    
-#    print('===============Training Done==========================')
-#    file = open("performance_runet.txt", "a")
-#    file.write("Batch_Size = " + str(args.batch_size) +  "  Loss Function = " + str(args.loss) +  "  Initial Filter Size = " + str(args.filters) + " Time_lc = " + str(args.time) + "  SSIM = " + str(ssim) + "\n")
-#    file.close()
-#    print(ssim)
-    
-    
-    
+   
 def predict():
     print('==========Loading Of testing Data =====================')
     hc_gt, lc_test = load_test_data()
