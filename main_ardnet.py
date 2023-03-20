@@ -1,12 +1,8 @@
-#from residual_unet import denoisenet
-from network import ridnet
+#############  ATTENTION RESIDUAL DILATED NETWORK (ARD-NET) MAIN FILE ###############
+
+from ardnet import denoisenet
 import math
-#from dilated_unet import denoisenet
-#from read_data import load_train_data, load_test_data
-#from data import load_train_data, load_test_data, load_validation_data
-#from data_single import load_train_data, load_test_data, load_validation_data
 from new_data_single import load_train_data, load_test_data, load_validation_data
-#from suv_analysis import suv_max_mean
 from sklearn.model_selection import train_test_split
 import numpy as np
 from matplotlib import pyplot as plt
@@ -19,10 +15,9 @@ from skimage.metrics import normalized_root_mse as nrmse
 from sklearn.model_selection import GridSearchCV
 import argparse
 import matplotlib
-#from keras.wrappers.scikit_learn import KerasClassifier
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('--epoch', dest = 'epoch', type = int, default = 25, help='No of Epochs')
@@ -44,8 +39,6 @@ def step_decay(epoch):
            math.floor((1+epoch)/epochs_drop))
    return lrate        
         
-#print(args.loss)
-
 ssim_lst = []
 def train():
     print('=============Loading of Training Data and Preprocessing==============')
@@ -74,40 +67,10 @@ def train():
     learning_rate = LearningRateScheduler(step_decay)
     initial_rate = learning_rate
     print('LR = ', learning_rate)
-    #lc_train_final, lc_val, hc_train_final, hc_val =  train_test_split(lc_train, hc_train, test_size = 0.10)
     history = model.fit(lc_train, hc_train, batch_size = args.batch_size, epochs = args.epoch, callbacks = [model_checkpoint, logger, learning_rate], validation_data = (lc_validation, hc_validation))
     scores = model.evaluate(lc_validation, hc_validation)
     ssim = scores[2]
-    
-    matplotlib.rcParams["figure.dpi"] = 1500
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    #plt.title('D-Net Loss Curve', fontsize = 24)
-    plt.xticks(fontsize=18)
-    plt.yticks(fontsize=18)
-    plt.ylabel('Loss', fontweight='bold',fontsize = 16)
-    plt.xlabel('Epoch', fontweight='bold',fontsize = 16)
-    plt.legend(['Train', 'Validation'], loc='upper right',fontsize=12)
-    plt.savefig(name+'_loss.png')
-    
-    plt.plot(history.history['SSIM'])
-    plt.plot(history.history['val_SSIM'])
-    #plt.title('D-Net SSIM Curve', fontsize = 24)
-    plt.xticks(fontsize=18)
-    plt.yticks(fontsize=18)
-    plt.ylabel('Loss', fontweight='bold',fontsize = 16)
-    plt.xlabel('Epoch', fontweight='bold',fontsize = 16)
-    plt.legend(['Train', 'Validation'], loc='lower right',fontsize=12)
-    plt.savefig(name+'_SSIM.png')
-    
-#    print('===============Training Done==========================')
-#    file = open("performance_ridnet.txt", "a")
-#    file.write("Batch_Size = " + str(args.batch_size) +  "Loss Function = " + str(args.loss) +  "  Initial Filter Size = " + str(args.filters) + " Time_lc = " + str(args.time) + "  SSIM = " + str(ssim) + "\n")
-#    file.close()
-#    print(ssim)
-    
-    
-    
+   
 def predict():
     print('==========Loading Of testing Data =====================')
     hc_gt, lc_test = load_test_data()
