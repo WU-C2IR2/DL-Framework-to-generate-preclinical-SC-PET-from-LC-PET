@@ -12,6 +12,15 @@ This repository provides the code for a deep-learning based framework for genera
 5. Testing the network:<br>
   a) Choose the filepath for the testing data. <br>
   b) Run the main file of the network which you intend to execute by using the command `python main_ardnet.py --args test` would run the testing for ARD-Net using the testing dataset.<br>
+
+### Different Network Model and their architecture files:
+| Network Model | Architecture File | Main File |
+| --- | --- | --- |
+| ARD-Net | model_ardnet.py | main_ardnet.py |
+| D-Net | model_dnet.py | main_dnet.py |
+| RU-Net | model_runet.py | main_runet.py |
+
+
   
 
 
